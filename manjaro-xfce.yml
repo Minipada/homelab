@@ -1,0 +1,16 @@
+---
+- hosts: all
+  connection: ssh
+  gather_facts: true
+
+  pre_tasks:
+  - name: Include vars of the environment
+    include_vars:
+      file: "vars/homelab.yml"
+
+  roles:
+    - system-utilities
+    - role: geerlingguy.pip
+      become: yes
+    - docker
+    - ohmyzsh

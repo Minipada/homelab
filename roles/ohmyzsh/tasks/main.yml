@@ -1,0 +1,37 @@
+---
+- name: Clone oh-my-zsh repo
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: /home/{{ user }}/.oh-my-zsh
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Clone superkolo repo
+  git:
+    repo: https://github.com/minipada/superkolo.git
+    dest: /tmp/superkolo
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Copy superkolo theme file
+  copy: remote_src=True src=/tmp/superkolo/superkolo.zsh-theme dest=/home/{{ user }}/.oh-my-zsh/themes/superkolo.zsh-theme
+
+- name: Template a file to "/home/{{user}}/.zshrc"
+  template:
+    src: files/zshrc.j2
+    dest: "/home/{{user}}/.zshrc"
+    owner: "{{user}}"
+    group: "{{user}}"
+    mode: '0644'
+
+- name: Template a file to "/home/{{user}}/.aliases"
+  template:
+    src: files/aliases.j2
+    dest: "/home/{{user}}/.aliases"
+    owner: "{{user}}"
+    group: "{{user}}"
+    mode: '0644'
+
+- name: Set zsh as default shell
+  user: name={{user}} shell=/usr/bin/zsh
+  become: yes

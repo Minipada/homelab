@@ -1,0 +1,6 @@
+---
+- name: "Install system packages: {{pacman_packages}}"
+  pacman:
+    name: "{{pacman_packages}}"
+    state: present
+  become: true

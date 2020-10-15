@@ -1,0 +1,21 @@
+---
+- name: Install docker
+  become: yes
+  import_role:
+    name: geerlingguy.docker
+  vars:
+    - docker_service_state: started
+    - docker_service_enabled: true
+
+- name: Deploy Docker daemon.json
+  become: yes
+  copy:
+    src: files/daemon.json
+    dest: /etc/docker/daemon.json
+    mode: "0666"
+
+- name: Reload docker service with new daemon.json
+  become: yes
+  systemd:
+    name: docker
+    state: reloaded

@@ -1,0 +1,24 @@
+docker_package: docker
+docker_users:
+  - homelab
+
+pip_package: python-pip
+pip_install_packages:
+  - name: docker
+    state: present
+
+pacman_packages:
+  - arp-scan
+  - fortune-mod # Zsh plugin
+  - htop
+  - jq
+  - lsof
+  - net-tools
+  - rsync
+  - tree
+  - vim
+  - x11vnc
+  - yay
+  - zsh
+
+user: homelab
